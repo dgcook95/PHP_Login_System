@@ -1,0 +1,70 @@
+<?php
+
+	if(isset($_POST['picSubmit'])){
+		
+		// require 'dbh.inc.php';
+		// Done to get file upload name
+		session_start();
+		$userName = $_SESSION['uid'];
+		$userLoginId = $_SESSION['user'];
+
+		$targetDir = "../images/uploads/";
+		$userFile = $_FILES["fileToUpload"]["name"];
+		
+		$target = $targetDir . basename($userFile);
+
+		$tempArray = explode($targetDir, $target);
+
+		$fileName = explode('.', $tempArray[1]);
+		$fileName[0] = $userName.'_profile_picture';
+		$fileName[1] = strtolower($fileName[1]);
+
+		$targetFileName = $fileName[0];
+		$targetFileExtension = '.'.$fileName[1];
+		$targetFile = $fileName[0].'.'.$fileName[1];
+		$fullFilePath = $targetDir.$targetFile;
+
+		$check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+
+		$uploadOk = 1;
+		
+		if ($check !== false) {
+        		$uploadOk = 1;
+    		} else {
+        		$uploadOk = 0;
+    		}
+		if (file_exists($fullFilePath)) {
+			unlink($fullFilePath);
+		}
+		if ($_FILES["fileToUpload"]["size"] > 500000) {
+    			$uploadOk = 0;
+		}
+		if ($fileName[1] != "jpg" && $fileName[1] != "png" && $fileName[1] != "jpeg" && $fileName[1] != "gif" ) {
+    			$uploadOk = 0;
+		}
+		if ($uploadOk == 0) {
+   			header("Location: ../profile.php?error=filenotuploaded");
+			exit();
+		} else {
+    			if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $fullFilePath)) {
+				/*$sql = "UPDATE usercontent SET profilePic = ? WHERE idUsers = ?";
+				$stmt = mysqli_stmt_init($conn);
+				if (!mysqli_stmt_prepare($stmt, $sql)) {
+                                        header("Location: ../profile.php?error=sqlerror");
+                                         exit();
+				}
+				else {
+					mysqli_stmt_bind_param($stmt, "si", $targetFile, $userLoginId);
+					mysqli_stmt_execute($stmt);
+				}*/
+				header("Location: ../profile.php?user=".$userName."&success=fileuploaded");
+    			} else {
+        			echo "Sorry, there was an error uploading your file.";
+    			}
+		}
+		//mysqli_stmt_close($contentStmt);
+        	//mysqli_close($conn); 
+		//print_r($_FILES['fileToUpload']);
+	}
+
+?>

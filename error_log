@@ -1,0 +1,2 @@
+[18-Nov-2019 22:08:22 UTC] PHP Warning:  mysqli_fetch_assoc() expects parameter 1 to be mysqli_result, boolean given in /home/pydev/public_html/phpstuff/profile.php on line 16
+[18-Nov-2019 22:10:11 UTC] PHP Warning:  mysqli_fetch_assoc() expects parameter 1 to be mysqli_result, boolean given in /home/pydev/public_html/phpstuff/profile.php on line 16
