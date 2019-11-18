@@ -1,8 +1,8 @@
 <?php
 
-define("DB_HOST","localhost");
-define("DB_NAME","pydev_phplogin");
-define("DB_USER","pydev_phplogin");
-define("DB_PASS","Schooliscool41!");
+define("DB_HOST","");
+define("DB_NAME","");
+define("DB_USER","");
+define("DB_PASS","");
 
 ?>
